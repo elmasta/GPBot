@@ -1,0 +1,34 @@
+header
+{
+	position: absolute;
+	left: 31%;
+}
+
+img
+{
+	padding-left: 20px;
+}
+
+:required
+{
+    box-shadow: 3px 3px 3px red;
+}
+
+.center
+{
+	display: inline;
+}
+
+form
+{
+	position: absolute;
+	top: 31%;
+	left: 30%;
+}
+
+footer
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
