@@ -1,36 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="main.css">
-    <title>GrandPy Bot</title>
-</head>
+    <head>
 
-<body>
-	<header>
-		<h1 class="center">GrandPy Bot, compteur d'histoire since 2019</h1>
-		<img class="center" src="logo.jpg" alt="Papy Bot" />
-	</header>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="main.css">
+        <title>GrandPy Bot</title>
 
-	<form id="champs">
-		<p>
-			Donne moi une adresse pour que je puisse te raconter une anecdote!
-		</p>
-    	<p class="center">
-       		<label for="adresse">Adresse</label>
-        	<input type="text" id="adresse" name="ville" size="50" required>
-    	</p>
-    	<p class="center">
-        	<label for="ville">Ville</label>
-        	<input type="text" id="ville" name="ville" size="30" required>
-    	</p>
-        <button class="center" id="envoi">Envoyer</button>
-    </form>
+    </head>
 
-	<footer>
-		<p>By Valentin Robin <a href="https://github.com/elmasta">My Git Hub</a></p>
-	</footer>
-</body>
+    <body>
+        <div>
+            <header>
+                <h1 class="center">GrandPy Bot, conteur d'histoire since 2019</h1>
+                <img class="center" src="logo.jpg" alt="Papy Bot" />
+            </header>
+
+            <form id="champs">
+                <p id="first">Donne moi une adresse et je te raconterai une anecdote!</p>
+                <p class="center">
+                    <label for="adress">Adresse</label>
+                    <input type="text" id="adress" name="adress" size="30" required>
+                </p>
+                <p class="center">
+                    <label for="town">Ville</label>
+                    <input type="text" id="town" name="town" size="20" required>
+                </p>
+                <button class="center" id="send">Envoyer</button>
+            </form>
+
+            <p id="answer">
+                test
+            </p>
+        </div>
+
+    </body>
+
+    <footer>
+        <p>By Valentin Robin <a href="https://github.com/elmasta">My Git Hub</a></p>
+    </footer>
+
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="main.js"></script>
 
 </html>
