@@ -4,10 +4,6 @@ $("input#adress").click(function() {
 	$("input#adress").focus();
 });
 
-$("input#town").click(function() {
-	$("input#town").focus();
-});
-
 function ajaxPost(url, data, callback, isJson) {
     var req = new XMLHttpRequest();
     req.open("POST", url);
@@ -29,12 +25,11 @@ function ajaxPost(url, data, callback, isJson) {
 }
 
 var charUsed = 0;
-var compteur = 0;
+var int = 0;
 
 function addElem(cleanAdress) {
     var adress = {
             adress: cleanAdress,
-            town: form.elements.town.value,
         }
     ajaxPost("lien vers serveur à ajouter", adress,
         function (reponse) {
@@ -44,23 +39,28 @@ function addElem(cleanAdress) {
     );
 }
 
-function thinking() {
-    charList = ["\/", "―", "\\", "|"]
-    if (compteur < 15) {
-        $("p#answer").text("Laisse moi réfléchir " + charList[charUsed]);
-        charUsed += 1;
-		if (charUsed === 4) {
-			charUsed = 0;
-		}
-        compteur += 1
-    } else {
-        clearInterval(intervalId);
-    }
-}
-
-//parti test
-//$("p#answer").show();
-
-//$("button#send").on('click', function(event) {
-//	$("p#answer").html = "coucou";
-//});
+$("button#send").on('click', function(event) {
+	$("p#answer").show();
+	var map = L.map('mapid').setView([48.858053, 2.294289], 15);
+	function thinking() {
+    	charList = ["\/", "―", "\\", "|"]
+    	if (int < 15) {
+        	$("p#answer").text("Laisse moi réfléchir " + charList[charUsed]);
+        	charUsed += 1;
+			if (charUsed === 4) {
+				charUsed = 0;
+			}
+        	int += 1
+    	} else {
+        	clearInterval(intervalId);
+    	}
+	}
+	var intervalId = setInterval(thinking, 500);
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1Ijoic3NnbWFzdGVyIiwiYSI6ImNqeGF5dGFpajA2YmgzbnBud253ZmMwYm8ifQ.RFvKLrjywTTEEou9gRHG4A'
+	}).addTo(map);
+	event.preventDefault();
+});

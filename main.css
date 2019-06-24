@@ -6,11 +6,11 @@ body
 	flex-grow: 1;
 }
 
-@media all and (min-width: 750px)
+@media all and (min-width: 700px)
 {
 	body
 	{
-		padding-left: 30%;
+		align-items: center;
 	}
 
 	form
@@ -47,4 +47,9 @@ img
 .center
 {
 	display: inline;
+}
+
+#mapid
+{
+	height: 300px;
 }
