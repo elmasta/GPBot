@@ -39,7 +39,27 @@ function addElem(cleanAdress) {
     );
 }
 
+
 $("button#send").on('click', function(event) {
+	$.ajax({
+		data : {
+			name : $('#nameInput').val(),
+			email : $('#emailInput').val()
+		},
+		type : 'POST',
+		url : '/process'
+	})
+	.done(function(data) {
+		if (data.error) {
+			$('#errorAlert').text(data.error).show();
+			$('#successAlert').hide();
+		}
+		else {
+			$('#successAlert').text(data.name).show();
+			$('#errorAlert').hide();
+		}
+
+	});
 	$("p#answer").show();
 	var map = L.map('mapid').setView([48.858053, 2.294289], 15);
 	function thinking() {

@@ -2,23 +2,23 @@
 
 <html>
     <head>
+        <title>GrandPy Bot</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""/>
-        <title>GrandPy Bot</title>
     </head>
 
     <body>
         <div>
             <header>
                 <h1 class="center">GrandPy Bot, conteur d'histoire since 2019</h1>
-                <img class="center" src="logo.jpg" alt="Papy Bot" />
+                <img class="center" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Papy Bot" />
             </header>
 
             <form id="champs">
-                <p id="first">Donne moi une adresse et je te raconterai une anecdote!</p>
+                <p id="first">Tu es perdu? Tu recherche l'histoire d'un lieu? Demande moi et je te raconterai même une anecdote!</p>
                 <p class="center">
                     <label for="adress">Adresse</label>
                     <input type="text" id="adress" name="adress" size="30" required>
@@ -36,7 +36,7 @@
     </footer>
 
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="main.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
