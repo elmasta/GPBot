@@ -25,7 +25,7 @@ $("button#send").on('click', function(event) {
         //else
 
         $("p#answer").show();
-        var map = L.map('mapid').setView([48.858053, 2.294289], 15);
+        var map = L.map('mapid').setView([data.lat, data.longi], 15);
         function thinking() {
             charList = ["\/", "―", "\\", "|"]
             if (int < 30) {
@@ -36,7 +36,7 @@ $("button#send").on('click', function(event) {
                 }
                 int += 1
             } else {
-                $("p#answer").text(data.question);
+                $("p#answer").text(data.summary);
                 clearInterval(intervalId);
             }
         }
