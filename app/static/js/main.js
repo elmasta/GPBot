@@ -21,8 +21,7 @@ $("button#send").on('click', function(event) {
         if (data.error === 1) {
             $("p#answer").text("je n'ai pas compris ta requète, essai de t'exprimer clairement");
         } else {
-            $("button#send").hide();
-            var map = L.map('mapid').setView([data.lat, data.longi], 15);
+            $("form#champs").hide();
             function thinking() {
                 charList = ["\/", "―", "\\", "|"]
                 if (int < 30) {
@@ -34,16 +33,17 @@ $("button#send").on('click', function(event) {
                     int += 1
                 } else {
                     $("p#answer").text(data.summary);
+                    var map = L.map('mapid').setView([data.lat, data.longi], 15);
+                    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1Ijoic3NnbWFzdGVyIiwiYSI6ImNqeGF5dGFpajA2YmgzbnBud253ZmMwYm8ifQ.RFvKLrjywTTEEou9gRHG4A'
+                    }).addTo(map);
                     clearInterval(intervalId);
                 }
             }
             var intervalId = setInterval(thinking, 250);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox.streets',
-            accessToken: 'pk.eyJ1Ijoic3NnbWFzdGVyIiwiYSI6ImNqeGF5dGFpajA2YmgzbnBud253ZmMwYm8ifQ.RFvKLrjywTTEEou9gRHG4A'
-            }).addTo(map);
         }
     });
 
