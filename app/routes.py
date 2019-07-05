@@ -23,7 +23,13 @@ def process():
     p_response = RequestParser()
 
     p_response.string_to_list(question)
-    if "".join(p_response.qprocess).replace("'", "").isalpha() is True:
+
+    p_response_try = "".join(p_response.qprocess).replace("'", "")
+    p_response_try = p_response_try.replace(")", "")
+    p_response_try = p_response_try.replace("(", "")
+    p_response_try = p_response_try.replace("-", "")
+
+    if p_response_try.isalpha() is True:
         with open("fr.json") as json_file:
             stop_word = json.load(json_file)
         p_response.request_reading(stop_word)
@@ -44,6 +50,9 @@ def process():
                     elif key == "extract":
                         summary = value
                         end_recur = 1
+                    elif key == "missing":
+                        end_recur = 1
                     elif isinstance(value, dict):
                         found = value
+
     return jsonify({'summary' : summary, 'lat' : lat, 'longi' : longi, "error" : error})

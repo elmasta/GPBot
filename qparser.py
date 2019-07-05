@@ -9,6 +9,7 @@ class RequestParser:
 
         self.qprocess = question.lower()
         self.qprocess = self.qprocess.replace("'", " ' ")
+        self.qprocess = self.qprocess.replace("(", " ( ")
         self.qprocess = self.qprocess.replace(",", " ")
         self.qprocess = self.qprocess.replace(".", " ")
         self.qprocess = self.qprocess.replace("!", " ")
@@ -41,3 +42,5 @@ class RequestParser:
                     self.qreturn += ("_" + q_word.capitalize())
         self.qreturn = self.qreturn.replace("_", "", 1)
         self.qreturn = self.qreturn.replace("_'_", "'")
+        self.qreturn = self.qreturn.replace("(_", "(")
+        print(self.qreturn)
