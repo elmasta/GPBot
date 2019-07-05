@@ -4,40 +4,94 @@
     <head>
         <title>GrandPy Bot</title>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""/>
+        <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.css"
+        integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+        crossorigin="">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
 
     <body>
-        <div>
-            <header>
+
+
+        <header>
+            <div id="header">
                 <h1 class="center">GrandPy Bot, conteur d'histoire since 2019</h1>
-                <img class="center" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Papy Bot" />
-            </header>
+                <img id="logo" class="center" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Papy Bot" />
+            </div>
+        </header>
 
-            <form id="champs">
-                <p id="first">Tu es perdu? Tu recherche l'histoire d'un lieu? Demande moi et je te raconterai même une anecdote!</p>
-                <p class="center">
-                    <label for="question">Adresse</label>
-                    <input type="text" id="question" name="question" size="30" required>
-                </p>
-                <button class="center" id="send">Envoyer</button>
-            </form>
-
-            <p id="answer"></p>
-            <div id="mapid"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <form id="champs">
+                        <p id="first">Tu es perdu? Tu recherche l'histoire d'un lieu? Demande moi et je te raconterai même une anecdote!</p>
+                        <input class="center" type="text" id="question" name="question" size="50" placeholder="Quelle est ta demande?" required>
+                        <button class="center" id="send">Envoyer</button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </body>
 
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-8">
+                    <p class="postprocess" id="userquestion"></p>
+                </div>
+            </div>
+            <div class="row"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="postprocess" id="reflexion"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <p id="answer"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8">
+                    <div id="mapid"></div>
+                </div>
+            </div>
+        </div>
+        
     <footer>
-        <p>By Valentin Robin <a href="https://github.com/elmasta">My Git Hub</a></p>
+        <p id="footer">By Valentin Robin<a href="https://github.com/elmasta"><img id="gitlogo" src="{{ url_for('static', filename='img/GitHub-Mark-32px.png') }}" alt="Git Hub logo" title="My Git Hub"/></a></p>
     </footer>
+
+    </body>
 
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@2.2.4/dist/esri-leaflet.js"
+        integrity="sha512-tyPum7h2h36X52O2gz+Pe8z/3l+Y9S1yEUscbVs5r5aEY5dFmP1WWRY/WLLElnFHa+k1JBQZSCDGwEAnm2IxAQ=="
+        crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
+        integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
         crossorigin=""></script>
 </html>

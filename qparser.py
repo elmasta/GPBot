@@ -11,6 +11,8 @@ class RequestParser:
         self.qprocess = self.qprocess.replace("'", " ' ")
         self.qprocess = self.qprocess.replace(",", " ")
         self.qprocess = self.qprocess.replace(".", " ")
+        self.qprocess = self.qprocess.replace("!", " ")
+        self.qprocess = self.qprocess.replace("?", " ")
         self.qprocess = self.qprocess.split()
 
     def request_reading(self, stop_word):
@@ -31,13 +33,11 @@ class RequestParser:
         del self.qprocess[:self.matchlist.index(1)]
         self.qprocess = self.qprocess[::-1]
         for q_word in self.qprocess:
-            if q_word == "'":
-                self.qreturn += "'"
             for s_words in stop_word:
                 if s_words == q_word:
-                    self.qreturn += ("+" + s_words)
+                    self.qreturn += ("_" + s_words)
                     break
                 elif (stop_word.index(s_words) + 1) == len(stop_word):
-                    self.qreturn += ("+" + q_word.capitalize())
-        self.qreturn = self.qreturn.replace("+", "", 1)
-        print(self.qreturn)
+                    self.qreturn += ("_" + q_word.capitalize())
+        self.qreturn = self.qreturn.replace("_", "", 1)
+        self.qreturn = self.qreturn.replace("_'_", "'")

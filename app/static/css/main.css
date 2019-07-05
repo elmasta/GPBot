@@ -1,47 +1,39 @@
-body
-{
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: column;
-	flex-grow: 1;
+@font-face {
+    font-family: "VAG-HandWritten-webfont";
+    src: url("VAG-HandWritten-webfont.eot") format("eot"),
+         url("VAG-HandWritten-webfont.woff") format("woff"),
+         url("VAG-HandWritten-webfont.ttf") format("truetype"),
+         url("VAG-HandWritten-webfont.svg") format("svg");
 }
 
-@media all and (min-width: 700px)
+html 
 {
-	body
-	{
-		align-items: center;
-	}
-
-	form
-	{
-		padding-top: 40px;
-	}
-
-	#first
-	{
-		padding-bottom: 20px;
-	}
+    position: relative;
+    min-height: 100%;
 }
 
-@media all and (min-height: 350px)
+h1
 {
-	footer
-	{
-		position: absolute;
-		bottom: 0%;
-		left: 2%;
-	}
+	font-family: VAG-HandWritten-webfont, sans-serif;
 }
 
-#first
+#header
 {
-	font-size: 20px;
+	padding-top: 20px;
 }
 
-img
+#logo
 {
+	padding-bottom: 20px;
 	padding-left: 20px;
+}
+
+header
+{
+	background-color: #B6DDFF;
+	color: #FFFFFF;
+	text-align: center;
+	padding-bottom: 20px;
 }
 
 .center
@@ -49,8 +41,95 @@ img
 	display: inline;
 }
 
+#send
+{
+	height: 40px;
+	width: 70px;
+	border-radius: 10px;
+}
+
+#first
+{
+	font-size: 20px;
+}
+
+#gitlogo
+{
+	padding-left: 10px;
+}
+
+input
+{
+	border-radius: 5px;
+}
+
+#answer
+{
+	height: 300px;
+	text-align: justify;
+	overflow: auto;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: #E7E7E7;
+}
+
 #mapid
 {
 	height: 300px;
-	width: 700px;
+	width: 250px;
+}
+
+footer 
+{
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #B6DDFF;
+}
+
+#footer
+{
+	margin-left: 40px;
+	margin-top: 10px;
+	font-family: VAG-HandWritten-webfont, sans-serif;
+	color: #FFFFFF;
+	font-size: 20px;
+}
+
+@media all and (min-width: 992px)
+{
+	#mapid
+	{
+		height: 300px;
+		width: 992px;
+	}
+}
+
+@media all and (min-width: 768px)
+{
+	#answer
+	{
+		width: 700px;
+	}
+
+	#mapid
+	{
+		width: 768px;
+	}
+}
+
+@media all and (min-width: 576px)
+{
+	#mapid
+	{
+		width: 550px;
+	}
+
+	#answer
+	{
+		width: 550px;
+	}
 }
