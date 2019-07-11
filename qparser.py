@@ -5,16 +5,17 @@ class RequestParser:
     """Is charged to parse user's request and retrieve infos from API"""
 
     QUOTE_LIST = [
-        "Hé mais je connais cet endroit, c'est la où... zzz ... Hein quoi?" +\
-            " tu veux plus d'informations? Tiens prends cet encyclop... zzz",
-        "C'est ici que j'ai rencontré ma femme, je crois... J'avais une" +\
+        "Hé mais je connais cet endroit, c'est la où. . . zzz . . . Hein " +\
+        "quoi? tu veux plus d'informations? Tiens prends cet encyclop. . . " +\
+        "zzz",
+        "C'est ici que j'ai rencontré ma femme, je crois. . . J'avais une" +\
             " femme? Ah sinon j'ai trouvé ça dans mon encyclopédie:",
         "Savais-tu que l'inventeur du kiwi habitait ici? Ah sacré Billy! As" +\
             "-tu connus les encyclopédies papier? Voilà à quoi ça " +\
             "ressemble à l'intérieur:",
         "I AM ERROR bzzzt bzzzzt encyclopédie:",
-        "zzz ... J'avais froid, je n'avais plus de munitions et les" +\
-            " Allemands allaient me tomber dessus... zzz ...Hein quoi?" +\
+        "zzz . . . J'avais froid, je n'avais plus de munitions et les" +\
+            " Allemands allaient me tomber dessus. . . zzz . . .Hein quoi?" +\
             " Ah oui, c'est un joli coin! Tu as de la chance sinon, j'ai" +\
             " mon encyclopédie avec moi:",
         "Encore un lieu que ces ordures communiste n'auront pas! Ils" +\
@@ -122,14 +123,14 @@ class RequestParser:
             for key, value in self.wiki_found.items():
                 if key == "extract":
                     if not value:
-                        self.summary = "... Hum il n'y a rien dans " +\
-                                       "mon encyclopédie, étrange..."
+                        self.summary = ". . . Hum il n'y a rien dans " +\
+                                       "mon encyclopédie, étrange. . ."
                     else:
                         self.summary = value
                     end_recur = 1
                 elif key == "missing":
-                    self.summary = "... Hum il n'y a rien dans mon " +\
-                                   "encyclopédie, étrange..."
+                    self.summary = ". . . Hum il n'y a rien dans mon " +\
+                                   "encyclopédie, étrange. . ."
                     end_recur = 1
                 elif isinstance(value, dict):
                     self.wiki_found = value
