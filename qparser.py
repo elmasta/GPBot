@@ -5,16 +5,24 @@ class RequestParser:
     """Is charged to parse user's request and retrieve infos from API"""
 
     QUOTE_LIST = [
-        "Hé mais je connais cet endroit, c'est la où... zzz",
+        "Hé mais je connais cet endroit, c'est la où... zzz ... Hein quoi?" +\
+            " tu veux plus d'informations? Tiens prends cet encyclop... zzz",
         "C'est ici que j'ai rencontré ma femme, je crois... J'avais une" +\
-            " femme?",
-        "Savais-tu que l'inventeur du kiwi habitait ici?",
-        "I AM ERROR",
+            " femme? Ah sinon j'ai trouvé ça dans mon encyclopédie:",
+        "Savais-tu que l'inventeur du kiwi habitait ici? Ah sacré Billy! As" +\
+            "-tu connus les encyclopédies papier? Voilà à quoi ça " +\
+            "ressemble à l'intérieur:",
+        "I AM ERROR bzzzt bzzzzt encyclopédie:",
         "zzz ... J'avais froid, je n'avais plus de munitions et les" +\
             " Allemands allaient me tomber dessus... zzz ...Hein quoi?" +\
-            " Ah oui, c'est un joli coin!",
-        "Encore un lieu que ces ordures communiste n'auront pas!",
-        "Moi vivant tu niras jamais dans ce lieu de perdition!"
+            " Ah oui, c'est un joli coin! Tu as de la chance sinon, j'ai" +\
+            " mon encyclopédie avec moi:",
+        "Encore un lieu que ces ordures communiste n'auront pas! Ils" +\
+            " n'auront pas non plus cette encyclopédie que j'ai dans les" +\
+            " mains!",
+        "Moi vivant tu n'iras jamais dans ce lieu de perdition! Ah j'ai" +\
+            " ça aussi dans mon encyclopédie! Je t'avais raconté comment" +\
+            " je l'avais gagné dans un jeu télévisé?"
     ]
 
     def __init__(self):
@@ -113,11 +121,15 @@ class RequestParser:
         while end_recur == 0:
             for key, value in self.wiki_found.items():
                 if key == "extract":
-                    self.summary = value
+                    if not value:
+                        self.summary = "... Hum il n'y a rien dans " +\
+                                       "mon encyclopédie, étrange..."
+                    else:
+                        self.summary = value
                     end_recur = 1
                 elif key == "missing":
-                    self.summary = "Par contre je n'ai rien trouvé sur mon" +\
-                                   " encyclopédie, étrange..."
+                    self.summary = "... Hum il n'y a rien dans mon " +\
+                                   "encyclopédie, étrange..."
                     end_recur = 1
                 elif isinstance(value, dict):
                     self.wiki_found = value

@@ -1,9 +1,9 @@
 @font-face {
-    font-family: "VAG-HandWritten-webfont";
-    src: url("VAG-HandWritten-webfont.eot") format("eot"),
-         url("VAG-HandWritten-webfont.woff") format("woff"),
-         url("VAG-HandWritten-webfont.ttf") format("truetype"),
-         url("VAG-HandWritten-webfont.svg") format("svg");
+    font-family: "Komika_Hand-webfont";
+    src: url("Komika_Hand-webfont.eot") format("eot"),
+         url("Komika_Hand-webfont.woff") format("woff"),
+         url("Komika_Hand-webfont.ttf") format("truetype"),
+         url("Komika_Hand-webfont.svg") format("svg");
 }
 
 html 
@@ -14,7 +14,7 @@ html
 
 h1
 {
-	font-family: VAG-HandWritten-webfont, sans-serif;
+	font-family: Komika_Hand-webfont, sans-serif;
 }
 
 #header
@@ -48,6 +48,18 @@ header
 	border-radius: 10px;
 }
 
+#secbut
+{
+	padding-top: 20px;
+}
+
+#restart
+{
+	height: 50px;
+	width: 150px;
+	border-radius: 10px;
+}
+
 #first
 {
 	font-size: 20px;
@@ -65,26 +77,50 @@ input
 
 #answer
 {
-	height: 300px;
-	text-align: justify;
-	overflow: auto;
-	border: 1px solid black;
 	border-radius: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-color: #DBEEFF;
+	background-color: #FEE5AB;
 }
 
-#mapid
+#space
 {
-	height: 300px;
-	width: 250px;
+	padding-bottom: 20px;
+}
+
+#gpbot
+{
+	font-size: 20px;
+	font-family: Komika_Hand-webfont, sans-serif;
+	color: #FFFFFF;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: justify;
+}
+
+#middlebar
+{
+	overflow: hidden;
+}
+
+#result
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	text-align: justify;
+}
+
+
+#bottom
+{
+	padding-top: 30px;
+	padding-bottom: 70px;
 }
 
 footer 
 {
-	position: fixed;
-    bottom: 0;
+	position : absolute;
+    bottom: 0%;
     width: 100%;
     height: 60px;
     background-color: #B6DDFF;
@@ -94,42 +130,43 @@ footer
 {
 	margin-left: 40px;
 	margin-top: 10px;
-	font-family: VAG-HandWritten-webfont, sans-serif;
+	font-family: Komika_Hand-webfont, sans-serif;
 	color: #FFFFFF;
 	font-size: 20px;
 }
 
-@media all and (min-width: 992px)
+@media (min-width: 1300px)
+{
+	#mapid
+	{
+		height: 400px;
+		width: 850px;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1299px)
 {
 	#mapid
 	{
 		height: 300px;
-		width: 992px;
+		width: 670px;
 	}
 }
 
-@media all and (min-width: 768px)
+@media (min-width: 577px) and (max-width: 768px)
 {
-	#answer
-	{
-		width: 700px;
-	}
-
 	#mapid
 	{
-		width: 768px;
+		height: 300px;
+		width: 500px;
 	}
 }
 
-@media all and (min-width: 576px)
+@media (max-width: 576px)
 {
 	#mapid
 	{
-		width: 550px;
-	}
-
-	#answer
-	{
-		width: 550px;
+		height: 300px;
+		width: 300px;
 	}
 }

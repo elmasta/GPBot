@@ -50,12 +50,25 @@ class TestRequestParser:
             def __init__(self, url):
                 pass
             def json(self):
-                return {"status" : "OK"}
+                return json.dumps({"status" : "OK"})
 
         monkeypatch.setattr("requests.get", MockRequestsGet)
         self.REQUESTPARSER.map_url_get(json)
-        print(self.REQUESTPARSER.map_found)
         assert self.REQUESTPARSER.map_found == results
+
+    def test_wiki_url_get(self, monkeypatch):
+
+        results = {"batchcomplete": ""}
+
+        class MockRequestsGet:
+            def __init__(self, url):
+                pass
+            def json(self):
+                return json.dumps({"batchcomplete": ""})
+
+        monkeypatch.setattr("requests.get", MockRequestsGet)
+        self.REQUESTPARSER.wiki_url_get(json)
+        assert self.REQUESTPARSER.wiki_found == results
 
     def test_wiki_researcher(self):
 
