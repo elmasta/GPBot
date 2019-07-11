@@ -47,8 +47,8 @@ $("button#send").on("click", function(event) {
                     }).addTo(map);
                     L.marker([data.lat, data.longi]).addTo(map).bindPopup(data.formatted_adress).openPopup();
                     clearInterval(intervalId);
-                    $("button#restart").show();
                 }
+                $("button#restart").show();
             }
         }
         var intervalId = setInterval(thinking, 250);
