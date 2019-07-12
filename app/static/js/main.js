@@ -21,7 +21,7 @@ $("button#send").on("click", function(event) {
         function thinking() {
             charList = ["\/", "―", "\\", "|"]
             if (int < 30) {
-                $("p#gpbot").html("Si j'ai bien compris, tu me demande de chercher «" + $("#question").val() + "». <br> Laisse moi quelques secondes chercher ça . . . " + charList[charUsed]);
+                $("p#gpbot").html("Si j'ai bien compris, tu me demande de chercher «" + data.question + "». <br> Laisse moi quelques secondes chercher ça . . . " + charList[charUsed]);
                 charUsed += 1;
                 if (charUsed === 4) {
                     charUsed = 0;
@@ -32,10 +32,10 @@ $("button#send").on("click", function(event) {
                     $("p#gpbot").text("Et bien je n'ai pas compris ta requète, essai de t'exprimer clairement");
                 } else {
                     if (data.summary === ". . . Hum il n'y a rien dans mon encyclopédie, étrange. . .") {
-                        $("p#gpbot").html("Tu m'avais demandé «" + $("#question").val() + "». <br>" + data.quote + "<br>" + data.summary);
+                        $("p#gpbot").html("Tu m'avais demandé «" + data.question + "». <br>" + data.quote + "<br>" + data.summary);
                     } else {
                         $("p#middlebar").show();
-                        $("p#gpbot").html("Tu m'avais demandé «" + $("#question").val() + "». <br>" + data.quote);
+                        $("p#gpbot").html("Tu m'avais demandé «" + data.question + "». <br>" + data.quote);
                         $("p#result").text(data.summary);
                     }
                     var map = L.map("mapid").setView([data.lat, data.longi], 15);

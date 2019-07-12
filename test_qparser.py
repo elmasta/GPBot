@@ -3,24 +3,33 @@ import json
 import requests
 
 class TestRequestParser:
+    """The class test each method from class RequestParser from
+    qparser.py"""
 
     REQUESTPARSER = RequestParser()
     REQUESTPARSERTWO = RequestParser()
     REQUESTPARSERTHREE = RequestParser()
+    REQUESTPARSERFOUR = RequestParser()
 
     def test_string_to_list(self):
+        """check if the methode string_to_list from qparser.py
+        works"""
 
         self.REQUESTPARSER.string_to_list("la,tour eiffel avec")
         self.REQUESTPARSERTWO.string_to_list("l'Arc de Triomphe de l'Étoile")
         self.REQUESTPARSERTHREE.string_to_list("Rue Jeanne-d'Arc (Rouen)")
+        self.REQUESTPARSERFOUR.string_to_list("<poste>")
         assert self.REQUESTPARSER.qprocess ==\
             ["la", "tour", "eiffel", "avec"]
         assert self.REQUESTPARSERTWO.qprocess ==\
             ["l", "'", "arc", "de", "triomphe", "de", "l", "'", "étoile"]
         assert self.REQUESTPARSERTHREE.qprocess ==\
             ["rue", "jeanne-d", "'", "arc", "(", "rouen)"]
+        assert self.REQUESTPARSERFOUR.qtoshow == "poste"
 
     def test_request_reading(self):
+        """check if the methode stop_request_reading from qparser.py
+        works"""
 
         with open("fr.json") as json_file:
             stop_word = json.load(json_file)
@@ -28,10 +37,12 @@ class TestRequestParser:
         self.REQUESTPARSERTWO.request_reading(stop_word)
         self.REQUESTPARSERTHREE.request_reading(stop_word)
         assert self.REQUESTPARSER.matchlist == [0, 1, 1, 0]
-        assert self.REQUESTPARSERTWO.matchlist == [0, 0, 1, 0, 0, 0, 0, 0, 1]
+        assert self.REQUESTPARSERTWO.matchlist == [0, 0, 1, 0, 1, 0, 0, 0, 1]
         assert self.REQUESTPARSERTHREE.matchlist == [1, 1, 0, 1, 0, 1]
 
     def test_stop_word_remover(self):
+        """check if the methode stop_word_remover from qparser.py
+        works"""
 
         with open("fr.json") as json_file:
             stop_word = json.load(json_file)
@@ -39,105 +50,141 @@ class TestRequestParser:
         self.REQUESTPARSERTWO.stop_word_remover(stop_word)
         self.REQUESTPARSERTHREE.stop_word_remover(stop_word)
         assert self.REQUESTPARSER.qreturn == "Tour_Eiffel"
-        assert self.REQUESTPARSERTWO.qreturn == "Arc_de_triomphe_de_l'Étoile"
+        assert self.REQUESTPARSERTWO.qreturn == "Arc_de_Triomphe_de_l'Étoile"
         assert self.REQUESTPARSERTHREE.qreturn == "Rue_Jeanne-d'Arc_(Rouen)"
 
-    def test_map_url_get(self, monkeypatch):
-
-        results = {"status" : "OK"}
-
-        class MockRequestsGet:
-            def __init__(self, url):
-                pass
-            def json(self):
-                return json.dumps({"status" : "OK"})
-
-        monkeypatch.setattr("requests.get", MockRequestsGet)
-        self.REQUESTPARSER.map_url_get(json)
-        assert self.REQUESTPARSER.map_found == results
-
-    def test_wiki_url_get(self, monkeypatch):
-
-        results = {"batchcomplete": ""}
+    def test_geocoding_researcher(self, monkeypatch):
+        """check if the method wiki_researcher from qparser.py works
+        without using Google API"""
 
         class MockRequestsGet:
-            def __init__(self, url):
+            def __init__(self, arg):
                 pass
-            def json(self):
-                return json.dumps({"batchcomplete": ""})
+            def mock_json(self):
+                return {
+                    "results" : [
+                        {
+                            "address_components" : [
+                                {
+                                    "long_name" : "Champ de Mars",
+                                    "short_name" : "Champ de Mars",
+                                    "types" : [ "establishment",
+                                                "point_of_interest" ]
+                                },
+                                {
+                                    "long_name" : "5",
+                                    "short_name" : "5",
+                                    "types" : [ "street_number" ]
+                                },
+                                {
+                                    "long_name" : "Avenue Anatole France",
+                                    "short_name" : "Avenue Anatole France",
+                                    "types" : [ "route" ]
+                                },
+                                {
+                                    "long_name" : "Paris",
+                                    "short_name" : "Paris",
+                                    "types" : [ "locality", "political" ]
+                                },
+                                {
+                                    "long_name" : "Arrondissement de Paris",
+                                    "short_name" : "Arrondissement de Paris",
+                                    "types" : [ "administrative_area_level_2",
+                                                "political" ]
+                                },
+                                {
+                                    "long_name" : "Île-de-France",
+                                    "short_name" : "Île-de-France",
+                                    "types" : [ "administrative_area_level_1",
+                                                "political" ]
+                                },
+                                {
+                                    "long_name" : "France",
+                                    "short_name" : "FR",
+                                    "types" : [ "country", "political" ]
+                                },
+                                {
+                                    "long_name" : "75007",
+                                    "short_name" : "75007",
+                                    "types" : [ "postal_code" ]
+                                }
+                            ],
+                            "formatted_address" : "Champ de Mars, 5 Avenue " +\
+                                "Anatole France, 75007 Paris, France",
+                            "geometry" : {
+                                "location" : {
+                                    "lat" : 48.85837009999999,
+                                    "lng" : 2.2944813
+                                },
+                                "location_type" : "ROOFTOP",
+                                "viewport" : {
+                                    "northeast" : {
+                                        "lat" : 48.8597190802915,
+                                        "lng" : 2.295830280291502
+                                    },
+                                    "southwest" : {
+                                        "lat" : 48.8570211197085,
+                                        "lng" : 2.293132319708498
+                                    }
+                                }
+                            },
+                            "partial_match" : "true",
+                            "place_id" : "ChIJLU7jZClu5kcR4PcOOO6p3I0",
+                            "plus_code" : {
+                                "compound_code" : "V75V+8Q Paris, France",
+                                "global_code" : "8FW4V75V+8Q"
+                            },
+                            "types" : [ "establishment", "point_of_interest",
+                                        "premise" ]
+                        }
+                    ],
+                }
 
-        monkeypatch.setattr("requests.get", MockRequestsGet)
-        self.REQUESTPARSER.wiki_url_get(json)
-        assert self.REQUESTPARSER.wiki_found == results
-
-    def test_wiki_researcher(self):
-
-        self.REQUESTPARSER.wiki_url_get(json)
-        self.REQUESTPARSERTWO.wiki_url_get(json)
-        self.REQUESTPARSERTHREE.wiki_url_get(json)
-        self.REQUESTPARSER.wiki_researcher()
-        self.REQUESTPARSERTWO.wiki_researcher()
-        self.REQUESTPARSERTHREE.wiki_researcher()
-        assert self.REQUESTPARSER.summary ==\
-            "La tour Eiffel  est une tour de fer puddlé de 324 mètres de " +\
-            "hauteur (avec antennes) située à Paris, à l’extrémité " +\
-            "nord-ouest du parc du Champ-de-Mars en bordure de la Seine " +\
-            "dans le 7e arrondissement. Son adresse officielle est 5, " +\
-            "avenue Anatole-France. Construite par Gustave Eiffel et ses " +\
-            "collaborateurs pour l’Exposition universelle de Paris de " +\
-            "1889, et initialement nommée « tour de 300 mètres », ce " +\
-            "monument est devenu le symbole de la capitale française, et " +\
-            "un site touristique de premier plan : il s’agit du troisième" +\
-            " site culturel français payant le plus visité en 2015, avec " +\
-            "6,9 millions de visiteurs, en 2011 la cathédrale Notre-Dame " +\
-            "de Paris était en tête des monuments à l'accès libre avec " +\
-            "13,6 millions de visiteurs estimés mais il reste le monument" +\
-            " payant le plus visité au monde,. Depuis son ouverture au " +\
-            "public, elle a accueilli plus de 300 millions de visiteurs." +\
-            "\nD’une hauteur de 312 mètres à l’origine, la tour Eiffel " +\
-            "est restée le monument le plus élevé du monde pendant " +\
-            "quarante ans. Le second niveau du troisième étage, appelé " +\
-            "parfois quatrième étage, situé à 279,11 mètres, est la " +\
-            "plus haute plateforme d'observation accessible au public de " +\
-            "l'Union européenne et la deuxième plus haute d'Europe, " +\
-            "derrière la tour Ostankino à Moscou culminant à 337 mètres. " +\
-            "La hauteur de la tour a été plusieurs fois augmentée par " +\
-            "l’installation de nombreuses antennes. Utilisée dans le " +\
-            "passé pour de nombreuses expériences scientifiques, elle " +\
-            "sert aujourd’hui d’émetteur de programmes radiophoniques et " +\
-            "télévisés."
-        assert self.REQUESTPARSERTWO.summary ==\
-            "L’arc de triomphe de l’Étoile, souvent appelé simplement " +\
-            "l’Arc de triomphe, dont la construction, décidée par " +\
-            "l'empereur Napoléon Ier, débuta en 1806 et s'acheva en 1836 " +\
-            "sous Louis-Philippe, est situé à Paris, dans les 8e, 16e, " +\
-            "et 17e arrondissements."
-        assert self.REQUESTPARSERTHREE.summary ==\
-            "La rue Jeanne-d'Arc est l'artère principale de la rive " +\
-            "droite de Rouen."
-
-    def test_geocoding_researcher(self):
-
-        self.REQUESTPARSER.map_url_get(json)
-        self.REQUESTPARSERTWO.map_url_get(json)
-        self.REQUESTPARSERTHREE.map_url_get(json)
-        self.REQUESTPARSER.geocoding_researcher()
-        self.REQUESTPARSERTWO.geocoding_researcher()
-        self.REQUESTPARSERTHREE.geocoding_researcher()
-        assert self.REQUESTPARSER.formatted_adress ==\
-            "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France"
-        assert self.REQUESTPARSER.coordinates ==\
-            {"lat": 48.85837009999999, "lng": 2.2944813}
-        assert self.REQUESTPARSERTWO.formatted_adress ==\
-            "Place Charles de Gaulle, 75008 Paris, France"
+        monkeypatch.setattr("json.loads", MockRequestsGet.mock_json)
+        self.REQUESTPARSERTWO.geocoding_researcher(json)
         assert self.REQUESTPARSERTWO.coordinates ==\
-            {"lat": 48.8737917, "lng": 2.2950275}
-        assert self.REQUESTPARSERTHREE.formatted_adress ==\
-            "Rue Jeanne d'Arc, 76000 Rouen, France"
-        assert self.REQUESTPARSERTHREE.coordinates ==\
-            {"lat": 49.44356519999999, "lng": 1.0914709}
+            {"lat" : 48.85837009999999, "lng" : 2.2944813}
+        assert self.REQUESTPARSERTWO.formatted_adress == "Champ de Mars, 5 " +\
+            "Avenue Anatole France, 75007 Paris, France"
+
+    def test_wiki_researcher(self, monkeypatch):
+        """check if the method wiki_researcher from qparser works
+        without using Wikipedia's API"""
+
+        self.REQUESTPARSERTWO.summary =\
+            ". . . Hum il n'y a rien dans mon encyclopédie, étrange. . ."
+
+        class MockRequestsGet:
+            def __init__(self, arg):
+                pass
+            def mock_json(self):
+                return {
+                    "batchcomplete": "",
+                    "query": {
+                        "normalized": [
+                            {
+                                "from": "Arc_de_Triomphe_de_l'Étoile",
+                                "to": "Arc de Triomphe de l'Étoile"
+                            }
+                        ],
+                        "pages": {
+                            "3687153": {
+                                "pageid": 3687153,
+                                "ns": 0,
+                                "title": "Arc de Triomphe de l'Étoile",
+                                "extract": ""
+                            }
+                        }
+                    }
+                }
+
+        monkeypatch.setattr("json.loads", MockRequestsGet.mock_json)
+        self.REQUESTPARSERTWO.wiki_researcher(json)
+        assert self.REQUESTPARSERTWO.summary ==\
+            ". . . Hum il n'y a rien dans mon encyclopédie, étrange. . ."
 
     def test_quote_picker(self):
+        """check if the method quote_picker from qparser works"""
 
         self.REQUESTPARSER.quote_picker()
         self.REQUESTPARSERTWO.quote_picker()

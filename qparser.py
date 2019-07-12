@@ -35,19 +35,24 @@ class RequestParser:
         self.coordinates = {"lat": 0, "lng": 0}
         self.error = 1
         self.wiki_found = {}
-        self.map_found = {}
         self.quote = ""
+        self.qtoshow = ""
 
     def string_to_list(self, question):
         """remove some special characters and change string to list"""
 
-        self.qprocess = question.lower()
+        spe_char = [",", ".", "!", "?", "<", ">", ";", "/", ":", "§", "*", '"',
+                    "=", "+", "[", "]", "|", "\\", "_", "^", "@", "{", "}",
+                    "$", "¨", "£", "¤", "µ", "%", "`"]
+
+        self.qprocess = question
+        for characters in spe_char:
+            self.qprocess = self.qprocess.replace(characters, " ")
+        self.qtoshow = self.qprocess.lstrip()
+        self.qtoshow = self.qtoshow.rstrip()
+        self.qprocess = self.qprocess.lower()
         self.qprocess = self.qprocess.replace("'", " ' ")
         self.qprocess = self.qprocess.replace("(", " ( ")
-        self.qprocess = self.qprocess.replace(",", " ")
-        self.qprocess = self.qprocess.replace(".", " ")
-        self.qprocess = self.qprocess.replace("!", " ")
-        self.qprocess = self.qprocess.replace("?", " ")
         self.qprocess = self.qprocess.split()
 
     def request_reading(self, stop_word):
@@ -81,28 +86,16 @@ class RequestParser:
         self.qreturn = self.qreturn.replace("_'_", "'")
         self.qreturn = self.qreturn.replace("(_", "(")
 
-    def map_url_get(self, json):
-        """retrieve a json file from google api"""
+    def geocoding_researcher(self, json):
+        """retrieve coordinates and adress from a json file retrieved
+        from Google API"""
 
         map_url = "https://maps.googleapis.com/maps/api/geocode/json?" +\
         "address=" + self.qreturn + "&region=fr&key=" +\
         "AIzaSyAdgDy_GLOqvdeqcoXJE5rVTiaGzq02HXU"
         response = requests.get(map_url)
-        self.map_found = json.loads(response.text)
-
-    def wiki_url_get(self, json):
-        """retrieve a json file from wikipedia api"""
-
-        wiki_url = "https://fr.wikipedia.org/w/api.php?format=json&action" +\
-        "=query&prop=coordinates|extracts&exintro&explaintext&titles=" +\
-        self.qreturn
-        response = requests.get(wiki_url)
-        self.wiki_found = json.loads(response.text)
-
-    def geocoding_researcher(self):
-        """retrieve coordinates and adress from a json file"""
-
-        found_list = self.map_found["results"]
+        map_found = json.loads(response.text)
+        found_list = map_found["results"]
         try:
             found_list = found_list[0]
             for key, value in found_list.items():
@@ -115,25 +108,27 @@ class RequestParser:
         except IndexError:
             pass
 
-    def wiki_researcher(self):
-        """retrieve adress summary from a json file"""
+    def wiki_researcher(self, json):
+        """retrieve adress summary from a json file retrieved from
+        Wikipedia's API"""
 
-        end_recur = 0
-        while end_recur == 0:
-            for key, value in self.wiki_found.items():
-                if key == "extract":
-                    if not value:
-                        self.summary = ". . . Hum il n'y a rien dans " +\
-                                       "mon encyclopédie, étrange. . ."
-                    else:
-                        self.summary = value
-                    end_recur = 1
-                elif key == "missing":
-                    self.summary = ". . . Hum il n'y a rien dans mon " +\
-                                   "encyclopédie, étrange. . ."
-                    end_recur = 1
-                elif isinstance(value, dict):
-                    self.wiki_found = value
+        wiki_url = "https://fr.wikipedia.org/w/api.php?format=json&action" +\
+        "=query&prop=coordinates|extracts&exintro&explaintext&titles=" +\
+        self.qreturn
+        response = requests.get(wiki_url)
+        wiki_found = json.loads(response.text)
+        for key, value in wiki_found.items():
+            if key == "extract":
+                if not value:
+                    self.summary = ". . . Hum il n'y a rien dans " +\
+                                   "mon encyclopédie, étrange. . ."
+                else:
+                    self.summary = value
+            elif "missing" or "invalid" in key:
+                self.summary = ". . . Hum il n'y a rien dans mon " +\
+                               "encyclopédie, étrange. . ."
+            elif isinstance(value, dict):
+                self.wiki_found = value
 
     def quote_picker(self):
         """pick a random quote from the quote list"""

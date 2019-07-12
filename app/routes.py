@@ -25,12 +25,11 @@ def process():
     p_response.request_reading(stop_word)
     if p_response.matchlist.count(1) != 0:
         p_response.stop_word_remover(stop_word)
-        p_response.map_url_get(json)
-        p_response.wiki_url_get(json)
-        p_response.geocoding_researcher()
-        p_response.wiki_researcher()
+        p_response.geocoding_researcher(json)
+        p_response.wiki_researcher(json)
         p_response.quote_picker()
-    return jsonify({"summary" : p_response.summary,
+    return jsonify({"question" : p_response.qtoshow,
+                    "summary" : p_response.summary,
                     "quote" : p_response.quote,
                     "lat" : p_response.coordinates["lat"],
                     "longi" : p_response.coordinates["lng"],
