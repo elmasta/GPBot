@@ -13,7 +13,7 @@ class RequestParser:
         "Savais-tu que l'inventeur du kiwi habitait ici? Ah sacré Billy! As" +\
             "-tu connus les encyclopédies papier? Voilà à quoi ça " +\
             "ressemble à l'intérieur:",
-        "I AM ERROR bzzzt bzzzzt encyclopédie:",
+        "I AM ERROR",
         "zzz . . . J'avais froid, je n'avais plus de munitions et les" +\
             " Allemands allaient me tomber dessus. . . zzz . . .Hein quoi?" +\
             " Ah oui, c'est un joli coin! Tu as de la chance sinon, j'ai" +\
