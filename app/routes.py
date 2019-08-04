@@ -13,7 +13,6 @@ def index():
     return render_template("main.html")
 
 @app.route('/process', methods=["POST"])
-
 def process():
 
     question = request.form["question"]

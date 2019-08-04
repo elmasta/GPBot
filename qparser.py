@@ -34,7 +34,6 @@ class RequestParser:
         self.summary = ""
         self.coordinates = {"lat": 0, "lng": 0}
         self.error = 1
-        self.wiki_found = {}
         self.quote = ""
         self.qtoshow = ""
 
@@ -117,18 +116,23 @@ class RequestParser:
         self.qreturn
         response = requests.get(wiki_url)
         wiki_found = json.loads(response.text)
-        for key, value in wiki_found.items():
-            if key == "extract":
-                if not value:
-                    self.summary = ". . . Hum il n'y a rien dans " +\
-                                   "mon encyclopédie, étrange. . ."
-                else:
-                    self.summary = value
-            elif "missing" or "invalid" in key:
-                self.summary = ". . . Hum il n'y a rien dans mon " +\
-                               "encyclopédie, étrange. . ."
-            elif isinstance(value, dict):
-                self.wiki_found = value
+
+        def summary_searcher():
+            for key, value in wiki_found.items():
+                if key == "extract":
+                    if not value:
+                        self.summary = ". . . Hum il n'y a rien dans " +\
+                                       "mon encyclopédie, étrange. . ."
+                    else:
+                        self.summary = value
+                elif key in ("missing", "invalid"):
+                    self.summary = ". . . Hum il n'y a rien dans mon " +\
+                                   "encyclopédie, étrange. . ."
+                elif isinstance(value, dict):
+                    return value
+
+        while not self.summary:
+            wiki_found = summary_searcher()
 
     def quote_picker(self):
         """pick a random quote from the quote list"""
