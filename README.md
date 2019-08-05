@@ -1,6 +1,6 @@
 # What is this?
 
-Don't you like it when your grandpa told you incoherent and boring stories?
+Don't you like it when your grandpa tell you incoherent and boring stories?
 Well, you're in luck, This program act just like him! Just ask for a the story of some place and he'll kindly give you the adresse and tell you some story. He can even give you a summary of that place if it's in his encyclopedia.
 
 # But how does it works?
