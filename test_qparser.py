@@ -12,7 +12,7 @@ class TestRequestParser:
     REQUESTPARSERFOUR = RequestParser()
 
     def test_string_to_list(self):
-        """check if the methode string_to_list from qparser.py
+        """check if the method string_to_list from qparser.py
         works"""
 
         self.REQUESTPARSER.string_to_list("la,tour eiffel avec")
@@ -28,7 +28,7 @@ class TestRequestParser:
         assert self.REQUESTPARSERFOUR.qtoshow == "poste"
 
     def test_request_reading(self):
-        """check if the methode stop_request_reading from qparser.py
+        """check if the method stop_request_reading from qparser.py
         works"""
 
         with open("fr.json") as json_file:
@@ -41,7 +41,7 @@ class TestRequestParser:
         assert self.REQUESTPARSERTHREE.matchlist == [1, 1, 0, 1, 0, 1]
 
     def test_stop_word_remover(self):
-        """check if the methode stop_word_remover from qparser.py
+        """check if the method stop_word_remover from qparser.py
         works"""
 
         with open("fr.json") as json_file:

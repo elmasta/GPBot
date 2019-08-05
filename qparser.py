@@ -1,4 +1,5 @@
 import requests
+import os
 from random import randrange
 
 class RequestParser:
@@ -25,6 +26,7 @@ class RequestParser:
             " ça aussi dans mon encyclopédie! Je t'avais raconté comment" +\
             " je l'avais gagné dans un jeu télévisé?"
     ]
+    SECRET_KEY = str(os.getenv("API_SECRET_KEY"))
 
     def __init__(self):
         self.qreturn = ""
@@ -90,8 +92,7 @@ class RequestParser:
         from Google API"""
 
         map_url = "https://maps.googleapis.com/maps/api/geocode/json?" +\
-        "address=" + self.qreturn + "&region=fr&key=" +\
-        "AIzaSyAdgDy_GLOqvdeqcoXJE5rVTiaGzq02HXU"
+        "address=" + self.qreturn + "&region=fr&key=" + self.SECRET_KEY
         response = requests.get(map_url)
         map_found = json.loads(response.text)
         found_list = map_found["results"]
