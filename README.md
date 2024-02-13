@@ -9,4 +9,4 @@ Once the user make a request, the server calls the methods in qparser.py one by 
 Once that's done, the server send a json with all the infos to the client and java do the rest. I used the Leaflet API to show the map.
 
 # Can I try it?
-You can try it directly here: https://el-gpbot.herokuapp.com/
+This project is currently offline :(
